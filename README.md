@@ -2,20 +2,20 @@
 
 <h2>Setup Both Ends-</h2>
 <h3>Installation in Angular App</h3>
-In your angular application install a <a href="https://www.npmjs.com/package/socket.io" target="_blank">SocketIO</a> package:
+<p>In your angular application install a <a href="https://www.npmjs.com/package/socket.io" target="_blank">SocketIO</a> package:</p>
 <code>npm install socket.io</code>
-or for current user only ( or if you don't have admin rights 😅 )
+<p>or for current user only ( or if you don't have admin rights 😅 )</p>
 <code>npm install socket.io --user</code>
 
 <h3>Installation in Python</h3>
-In your python application you need to install <a href=https://pypi.org/project/Flask-SocketIO/" target="_blank">socket-io</a> library:
+<p>In your python application you need to install <a href=https://pypi.org/project/Flask-SocketIO/" target="_blank">socket-io</a> library:</p>
 <code>pip install flask-socketio</code>
 
 <hr/>
 <h2>Create a Connection</h2>
 <h3>Python</h3>
 <p>In your python file, you need to create a flask server and sockets for connection:</p>
-<code>
+```py
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     SOCKETIO.run(app,host='0.0.0.0',port=9000)
 
-</code>
+```
 
 Then run your python application in terminal:
 <code>python app.py</code>
@@ -53,7 +53,7 @@ Here 0.0.0.0:9000 means the app  is running on local IP and port 9000
 <h3>Angular</h3>
 <p>In your angular typescript file, you need to call for connection.</p>
 <p>Here I am creating an angular service to create a connection:</p>
-<code>
+```js
 import { Injectable } from '@angular/core'; 
 import io from 'socket.io-client'; 
 
@@ -76,13 +76,13 @@ export class SocketConnectService {
 
   }
 }
-</code>
+```
 
 <p>Now you can import "SocketConnectService" in components or other services and use the connection setup by the service by calling its  <code>getConnection()</code> method</p>
 
 <h3>Example: </h3>
 <h4>Sample Angular Component</h4>
-<code>
+```js
 import { Component, OnInit } from '@angular/core'; 
 import { SocketConnectService } from './socket-connect.service'; 
 @Component({
@@ -120,10 +120,10 @@ export class SampleComponent implements OnInit {
     }
 
 }
-</code>
+```
 
 <h4>In your Python</h4>
-<code>
+```py
 
 @SOCKETIO.on('call_from_ng')
 def handlingCallFromNg(data):
@@ -131,7 +131,7 @@ def handlingCallFromNg(data):
     #### Do anything you want to do with the data
     emit('response_from_py', { 'data' : 'Anything' })    #### Sending response from python to angular app
 
-</code>
+```
 
 <p>If you encounter a bug or problem with this sample code, please submit a new issue so we know about it and can fix it.</p>
 <p>For general issues refer associated forums and documentation</p>
