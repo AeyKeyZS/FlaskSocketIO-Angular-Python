@@ -35,17 +35,14 @@ SOCKETIO = SocketIO(app)
 
 @app.route('/')
 def index():
-
     #### if you want it in your python app to return something if default route is called
     return render_template('index.html')
 
 @SOCKETIO.on('connect')
 def connect_message(message):
-
     emit('connect_ngsocket', {'data': True})
 
 if __name__ == '__main__':
-
     SOCKETIO.run(app,host='0.0.0.0',port=9000)
 
 ```
@@ -72,9 +69,7 @@ This will run the socket and print some message like:
 <p>Here I am creating an angular service to create a connection:</p>
 
 ``` js
-import {
-    Injectable
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 import io from 'socket.io-client';
 
 @Injectable({
@@ -83,17 +78,13 @@ import io from 'socket.io-client';
 export class SocketConnectService {
     socket: any;
     constructor() {
-
         this.socket = io.connect('http://<local IP>:9000/'); // Connection with Server using API, Enter Local IP carefully
         this.socket.on('connect_ngsocket', function(CONN_MSG) {
             console.log('HI, from Angular', CONN_MSG);
         });
-
     }
     getConnection() {
-
         return this.socket;
-
     }
 }
 ```
@@ -104,36 +95,23 @@ export class SocketConnectService {
 <h4>Sample Angular Component</h4>
 
 ``` js
-import {
-    Component,
-    OnInit
-} from '@angular/core';
-import {
-    SocketConnectService
-} from './socket-connect.service';
+import { Component, OnInit } from '@angular/core';
+import { SocketConnectService } from './socket-connect.service';
 @Component({
     selector: 'app-sample',
-    templateUrl: './Sample.component.html',
-    styleUrls: ['./Sample.component.scss'],
-    encapsulation: ViewEncapsulation.None
 })
 export class SampleComponent implements OnInit {
 
     socket: any;
     constructor(private SCService: SocketConnectService) {
-
         this.socket = this.SCService.getConnection();
-
     }
 
     ngOnInit() {
-
         this.runTheMethod();
-
     }
 
     runTheMethod() {
-
         // sending request to a python socket
         this.socket.emit('call_from_ng', {
             data: 'Any Data You Want To Send To Python App'
@@ -144,7 +122,6 @@ export class SampleComponent implements OnInit {
             console.log(RESPONSE);
             // and do whatever you want
         });
-
     }
 
 }
@@ -156,7 +133,6 @@ export class SampleComponent implements OnInit {
 
 @SOCKETIO.on('call_from_ng')
 def handlingCallFromNg(data):
-
     #### Do anything you want to do with the data
     emit('response_from_py', { 'data' : 'Anything' })    #### Sending response from python to angular app
 
