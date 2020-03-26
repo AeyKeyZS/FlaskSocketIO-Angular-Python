@@ -31,7 +31,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-SOCKETIO = SocketIO(app)
+SOCKETIO = SocketIO(app, cors_allowed_origins="*")
 
 @app.route('/')
 def index():
@@ -39,8 +39,9 @@ def index():
     return render_template('index.html')
 
 @SOCKETIO.on('connect')
-def connect_message(message):
-    emit('connect_ngsocket', {'data': True})
+def message():
+    data = 'Hi, connection from flask-socketio'
+    emit('connect_ngsocket', {'data': data})
 
 if __name__ == '__main__':
     SOCKETIO.run(app,host='0.0.0.0',port=9000)
